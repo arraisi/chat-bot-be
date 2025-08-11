@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Third Party Services
@@ -33,6 +32,16 @@ return [
             'bot_user_oauth_token' => env('SLACK_BOT_USER_OAUTH_TOKEN'),
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
+    ],
+
+    'upload_api' => [
+        'url' => env('UPLOAD_API_URL', 'http://10.30.14.40:8888/predict'),
+        'timeout' => env('UPLOAD_API_TIMEOUT', 120),
+    ],
+
+    'chatbot_api' => [
+        'url' => env('CHATBOT_API_URL', 'http://10.30.14.40:8889/predict'),
+        'timeout' => env('CHATBOT_API_TIMEOUT', 60),
     ],
 
 ];
