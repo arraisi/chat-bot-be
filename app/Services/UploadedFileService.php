@@ -32,14 +32,26 @@ class UploadedFileService
         // Start with a fresh query for filtering
         $query = $this->repo->query();
 
-        // Search
+        // Filter by authority (case-insensitive)
+        $authority = $request->input('authority');
+        if ($authority) {
+            $query->where('authority', 'ilike', $authority);
+        }
+
+        // Filter by category (case-insensitive)
+        $category = $request->input('category');
+        if ($category) {
+            $query->where('category', 'ilike', $category);
+        }
+
+        // Search (case-insensitive)
         $searchValue = $request->input('search.value');
         if ($searchValue) {
             $query->where(function ($q) use ($searchValue) {
-                $q->where('filename', 'like', "%{$searchValue}%")
-                  ->orWhere('path', 'like', "%{$searchValue}%")
-                  ->orWhere('authority', 'like', "%{$searchValue}%")
-                  ->orWhere('category', 'like', "%{$searchValue}%");
+                $q->where('filename', 'ilike', "%{$searchValue}%")
+                  ->orWhere('path', 'ilike', "%{$searchValue}%")
+                  ->orWhere('authority', 'ilike', "%{$searchValue}%")
+                  ->orWhere('category', 'ilike', "%{$searchValue}%");
             });
         }
 
@@ -70,5 +82,25 @@ class UploadedFileService
             'recordsFiltered' => $recordsFiltered,
             'data' => $items,
         ];
+    }
+
+    public function create(array $data)
+    {
+        return $this->repo->create($data);
+    }
+
+    public function findById($id)
+    {
+        return $this->repo->findById($id);
+    }
+
+    public function update($id, array $data)
+    {
+        return $this->repo->update($id, $data);
+    }
+
+    public function delete($id)
+    {
+        return $this->repo->delete($id);
     }
 }
