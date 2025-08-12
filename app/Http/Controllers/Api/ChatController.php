@@ -30,6 +30,24 @@ class ChatController extends Controller
         $otoritas = $request->input('otoritas');
         $kategori = $request->input('kategori');
 
+        // TEMPORARY MOCK RESPONSE FOR TESTING
+        // Remove this block when external API is working
+        if (config('app.env') === 'local' || $request->has('mock')) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Mock chat response received',
+                'response' => "Berikut adalah visi, misi, tata nilai, dan moto Peruri:\n\n*Visi:\nMenjadi korporasi percetakan sekuriti terintegrasi dan solusi digital sekuriti kelas dunia.\n\nMisi:\n\na. Sebagai mitra terpercaya (trusted partner) dalam menyediakan produk sekuriti tinggi dan layanan digital penjamin keaslian terintegrasi kelas dunia\nb. Memaksimalkan nilai tambah bagi negara, mitra dan karyawan\nc. Memberikan kontribusi positif terhadap lingkungan, kepada bangsa dan negara.\n\nTata Nilai:\nAKHLAK (Amanah, Kompeten, Harmonis, Loyal, Adaptif, Kolaboratif)\n\nMoto:* Cergas, Cepat, Cermat, Cerdas, Ceria\n\n 📄 *Referensi:*\n- pdf-code-of-conduct.pdf, Sub Bab A. Visi, Misi, Tata Nilai, dan Moto",
+                'raw_data' => [
+                    'prompt' => $prompt,
+                    'otoritas' => $otoritas,
+                    'kategori' => $kategori,
+                    'mock' => true
+                ],
+                'timestamp' => now()->toISOString()
+            ]);
+        }
+        // END MOCK RESPONSE
+
         // Validate message
         $validation = $this->chatBotService->validateMessage($prompt);
         if (!$validation['valid']) {
