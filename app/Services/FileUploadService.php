@@ -26,7 +26,7 @@ class FileUploadService
      * @return array
      * @throws \Exception
      */
-    public function uploadFile(UploadedFile $file, string $otoritas, string $category, string $tipeData = 'with-daftar-isi'): array
+    public function uploadFile(UploadedFile $file, string $otoritas, string $category, string $tipeData): array
     {
         try {
             Log::info('Starting file upload to external API', [
@@ -94,7 +94,7 @@ class FileUploadService
      * @param int $maxRetries
      * @return array
      */
-    public function uploadFileWithRetry(UploadedFile $file, string $otoritas, string $category, string $tipeData = 'with-daftar-isi', int $maxRetries = 3): array
+    public function uploadFileWithRetry(UploadedFile $file, string $otoritas, string $category, string $tipeData, int $maxRetries = 3): array
     {
         $attempt = 1;
 

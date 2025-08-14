@@ -27,13 +27,13 @@ class FileUploadController extends Controller
             'file' => 'required|file|max:51200', // 50MB max
             'otoritas' => 'required|string|max:100',
             'category' => 'required|string|max:100',
-            'tipe_data' => 'sometimes|string|in:with-daftar-isi,without-daftar-isi'
+            'tipe_data' => 'sometimes|string'
         ]);
 
         $file = $request->file('file');
         $otoritas = $request->input('otoritas');
         $category = $request->input('category');
-        $tipeData = $request->input('tipe_data', 'with-daftar-isi');
+        $tipeData = $request->input('tipe_data');
 
         // Validate file before upload
         $validation = $this->uploadService->validateFile($file);
@@ -61,9 +61,15 @@ class FileUploadController extends Controller
 
                 return response()->json([
                     'success' => true,
-                    'message' => 'File uploaded successfully',
-                    'external_api_response' => $result['data'],
-                    'file_record' => $uploadedFile
+                    'message' => 'File uploaded to external API successfully',
+                    'data' => $result['data'],
+                    'file_info' => [
+                        'filename' => $file->getClientOriginalName(),
+                        'size' => $file->getSize(),
+                        'authority' => $otoritas,
+                        'category' => $category,
+                        'tipe_data' => $tipeData
+                    ]
                 ], 201);
 
             } catch (\Exception $e) {
