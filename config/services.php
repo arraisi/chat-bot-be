@@ -37,6 +37,7 @@ return [
     'upload_api' => [
         'url' => env('UPLOAD_API_URL', 'http://10.30.14.40:8888/predict'),
         'timeout' => env('UPLOAD_API_TIMEOUT', 120),
+        'max_retries' => env('UPLOAD_API_MAX_RETRIES', 3),
     ],
 
     'chatbot_api' => [
