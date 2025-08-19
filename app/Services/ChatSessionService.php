@@ -85,7 +85,7 @@ class ChatSessionService
     public function getUserSessions(?string $userId = null, int $limit = 50): array
     {
         try {
-            $sessions = $this->repository->getUserSessions($userId, $limit);
+            $sessions = $this->repository->getUserSessions($userId, $limit)->sortByDesc('updated_at')->values();
 
             return [
                 'success' => true,

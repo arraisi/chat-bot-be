@@ -21,7 +21,7 @@ class ChatController extends Controller
     public function chat(Request $request)
     {
         $request->validate([
-            'prompt' => 'required|string|max:5000',
+            'prompt' => 'required|string',
             'otoritas' => 'required|string|max:100',
             'kategori' => 'required|string|max:100',
         ]);
@@ -32,7 +32,7 @@ class ChatController extends Controller
 
         // TEMPORARY MOCK RESPONSE FOR TESTING
         // Remove this block when external API is working
-        if (config('app.env') === 'local' || $request->has('mock')) {
+        if (env('APP_ENV') === 'local' || $request->has('mock')) {
             return response()->json([
                 'success' => true,
                 'message' => 'Mock chat response received',
