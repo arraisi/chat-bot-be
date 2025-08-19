@@ -39,9 +39,26 @@ class ChatSessionController extends Controller
             'title' => 'sometimes|string|max:255',
             'authority' => 'sometimes|in:ALL,SDM,HUKUM,ADMIN',
             'user_id' => 'sometimes|string|max:255',
+            'user_account' => 'sometimes|array',
+            'user_account.id' => 'sometimes|string|max:255',
+            'user_account.username' => 'sometimes|string|max:255',
+            'user_account.name' => 'sometimes|string|max:255',
+            'user_account.email' => 'sometimes|email|max:255',
+            'user_account.authority' => 'sometimes|in:ALL,SDM,HUKUM,ADMIN',
+            'user_account.roles' => 'sometimes|array',
+            'user_account.employee_id' => 'sometimes|string|max:255',
+            'user_account.department' => 'sometimes|string|max:255',
         ]);
 
-        $result = $this->chatSessionService->createSession($request->all());
+        // Prepare data for session creation
+        $sessionData = $request->all();
+
+        // Extract user_id from user_account.id if user_account exists
+        if ($request->has('user_account') && isset($request->user_account['id'])) {
+            $sessionData['user_id'] = $request->user_account['id'];
+        }
+
+        $result = $this->chatSessionService->createSession($sessionData);
 
         return response()->json($result, $result['success'] ? 201 : 500);
     }
