@@ -24,7 +24,7 @@ class FileUploadController extends Controller
     public function upload(Request $request)
     {
         $request->validate([
-            'file' => 'required|file', // 50MB max
+            'file' => 'required|file',
             'otoritas' => 'required|string|max:100',
             'category' => 'required|string|max:100',
             'tipe_data' => 'sometimes|string'
@@ -71,7 +71,6 @@ class FileUploadController extends Controller
                         'tipe_data' => $tipeData
                     ]
                 ], 201);
-
             } catch (\Exception $e) {
                 // External upload succeeded but database save failed
                 return response()->json([

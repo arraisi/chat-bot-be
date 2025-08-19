@@ -18,10 +18,7 @@ class FileUploadService
     {
         $errors = [];
 
-        // Check file size (50MB max)
-        if ($file->getSize() > 52428800) {
-            $errors[] = 'File size exceeds 50MB limit';
-        }
+        // No file size limit - allow any size
 
         // Check file type
         $allowedTypes = ['pdf', 'doc', 'docx', 'csv', 'xlsx', 'xls', 'json', 'txt', 'md', 'zip'];
@@ -126,8 +123,8 @@ class FileUploadService
     public function getUploadLimits(): array
     {
         return [
-            'max_file_size' => 52428800, // 50MB in bytes
-            'max_file_size_mb' => 50,
+            'max_file_size' => null, // No size limit
+            'max_file_size_mb' => 'unlimited',
             'supported_types' => ['pdf', 'doc', 'docx', 'csv', 'xlsx', 'xls', 'json', 'txt', 'md', 'zip'],
             'max_retries' => $this->maxRetries,
             'retry_delay_ms' => $this->retryDelayMs
