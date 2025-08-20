@@ -21,10 +21,10 @@ RUN apt-get update && apt-get install -y \
   libzip-dev && \
 rm -r /var/lib/apt/lists/*
 
-# install extension for lumen
+# install extension for lumen + PostgreSQL
 RUN pecl install mcrypt-1.0.6 && \
   pecl install imagick && \
-  docker-php-ext-install fileinfo exif pcntl bcmath gd mysqli pdo pdo_mysql && \
+  docker-php-ext-install fileinfo exif pcntl bcmath gd mysqli pdo pdo_mysql pdo_pgsql pgsql && \
   docker-php-ext-enable mcrypt && \
   docker-php-ext-enable imagick && \
   a2enmod rewrite
@@ -52,7 +52,7 @@ RUN sed -i "s|DocumentRoot /var/www/html|DocumentRoot ${APP_SOURCE}/public|g" /e
 COPY . .
 
 # copy .env
-COPY .env .
+# COPY .env .
 
 # give full access
 RUN mkdir -p public/storage && \
