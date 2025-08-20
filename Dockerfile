@@ -51,6 +51,9 @@ RUN sed -i "s|DocumentRoot /var/www/html|DocumentRoot ${APP_SOURCE}/public|g" /e
 # copy source laravel
 COPY . .
 
+# copy .env
+COPY .env .env
+
 # give full access
 RUN mkdir -p public/storage && \
     chmod -R 777 storage/* && \
