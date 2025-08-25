@@ -74,6 +74,7 @@ class FileUploadService
                 $response = Http::timeout(60)
                     ->attach('file', file_get_contents($file->path()), $file->getClientOriginalName())
                     ->post(config('services.upload_api.url', 'https://api.example.com/upload'), [
+                        'prompt' => $file,
                         'otoritas' => $authority,
                         'category' => $category,
                         'tipe_data' => $tipeData
