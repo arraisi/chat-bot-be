@@ -21,6 +21,7 @@ Route::apiResource('uploaded-files', UploadedFileController::class);
 Route::post('upload', [FileUploadController::class, 'upload']);
 Route::get('upload/limits', [FileUploadController::class, 'limits']);
 Route::get('upload/test-connection', [FileUploadController::class, 'testConnection']);
+Route::get('upload/php-info', [FileUploadController::class, 'phpInfo']);
 
 // Chat bot routes
 Route::post('chat', [ChatController::class, 'chat']);

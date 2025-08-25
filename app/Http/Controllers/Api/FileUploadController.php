@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Services\FileUploadService;
 use App\Services\UploadedFileService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class FileUploadController extends Controller
 {
@@ -23,8 +24,10 @@ class FileUploadController extends Controller
      */
     public function upload(Request $request)
     {
+        info('Received file upload request', ['request' => $request->all()]);
+
         $request->validate([
-            'prompt' => 'required|file|max:10240',
+            'prompt' => 'required|file',
             'otoritas' => 'required|string|max:100',
             'category' => 'required|string|max:100',
             'tipe_data' => 'sometimes|string'
@@ -122,5 +125,22 @@ class FileUploadController extends Controller
                 'error' => $e->getMessage()
             ], 503);
         }
+    }
+
+    /**
+     * Get current PHP configuration for debugging
+     */
+    public function phpInfo()
+    {
+        return response()->json([
+            'success' => true,
+            'php_config' => [
+                'upload_max_filesize' => ini_get('upload_max_filesize'),
+                'post_max_size' => ini_get('post_max_size'),
+                'memory_limit' => ini_get('memory_limit'),
+                'max_execution_time' => ini_get('max_execution_time'),
+                'max_input_time' => ini_get('max_input_time'),
+            ]
+        ]);
     }
 }
