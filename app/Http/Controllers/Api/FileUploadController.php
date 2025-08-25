@@ -30,7 +30,7 @@ class FileUploadController extends Controller
             'tipe_data' => 'sometimes|string'
         ]);
 
-        $file = $request->file('file');
+        $file = $request->file('prompt');
         $otoritas = $request->input('otoritas');
         $category = $request->input('category');
         $tipeData = $request->input('tipe_data');
