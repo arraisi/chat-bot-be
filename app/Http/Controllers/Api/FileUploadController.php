@@ -52,7 +52,6 @@ class FileUploadController extends Controller
             // Store file record in database
             try {
                 $uploadedFile = $this->uploadedFileService->create([
-                    'prompt' => $file,
                     'filename' => $file->getClientOriginalName(),
                     'path' => 'external-api', // Since file is uploaded to external API
                     'size' => $file->getSize(),
