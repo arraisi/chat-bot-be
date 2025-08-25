@@ -24,7 +24,7 @@ class FileUploadController extends Controller
     public function upload(Request $request)
     {
         $request->validate([
-            'prompt' => 'required|file',
+            'prompt' => 'required|file|max:10240',
             'otoritas' => 'required|string|max:100',
             'category' => 'required|string|max:100',
             'tipe_data' => 'sometimes|string'
